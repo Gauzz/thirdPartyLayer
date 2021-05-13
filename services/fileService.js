@@ -65,16 +65,17 @@ const listFiles = async (filter, page, limit) => {
             params: params
         });
         let files = [];
-        await response.data.forEach(async (file) => {
-            let fileObject = {
-                key: file.key,
-                name: file.displayName,
-                url: file.url,
-                lastModified: file.updatedAt,
-                createdAt: file.createdAt
-            }
-            await files.push(fileObject);
-        })
+        if (response.data.length > 0)
+            await response.data.forEach(async (file) => {
+                let fileObject = {
+                    key: file.key,
+                    name: file.displayName,
+                    url: file.url,
+                    lastModified: file.updatedAt,
+                    createdAt: file.createdAt
+                }
+                await files.push(fileObject);
+            })
 
         return { status: 200, data: files };
     } catch (error) {
